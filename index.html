@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cric-Verse Login Page</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url("./msdhoni/Stadium_01.jpg");
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: black;
+      margin:10px;
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    #container {
+      margin-top: 40px;
+      height: 460px;
+      width: 100%;
+      max-width: 400px;
+      background-image: url("./msdhoni/India_Logo.jpg");
+      padding: 2.5rem;
+      border-radius: 50px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    #login-form{
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    fieldset {
+      position: relative;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    legend {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      color: #666;
+      padding: 0 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem;
+      border: 5px solid #1c39df;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: white;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    input:focus + legend,
+    input:not(:placeholder-shown) + legend {
+      top: 0;
+      left: 0.8rem;
+      font-size: 0.85rem;
+      color: #667eea;
+      background: white;
+      padding: 0 0.5rem;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1rem;
+      border: 3px solid #1c39df;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(12, 8, 220, 0.4);
+    }
+
+    button a {
+      color:  rgb(235, 235, 252);
+      text-decoration: none;
+      display: block;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+      color: #0a0a0a;
+      font-weight: 900;
+    }
+
+    a {
+      color: #d5f00b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #051af7;
+    }
+    #message {
+      margin-top: 1rem;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    #message.success {
+      background: #e6f4ea;
+      color: #1e7e34;
+    }
+
+    #message.error {
+      background: #fde7e7;
+      color: #d32f2f;
+    }
+
+    #message.warning {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+
+    /* Update existing media query and add new ones */
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      
+      #container {
+        padding: 1.5rem;
+        height: auto;
+        min-height: 420px;
+        margin-top: 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin: 5px;
+      }
+
+      input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      #container {
+        padding: 1rem;
+        border-radius: 25px;
+      }
+
+      input, button {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+      }
+
+      legend {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      #container {
+        max-width: 80%;
+        height: auto;
+        min-height: 500px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 20px auto;
+        padding: 2rem;
+      }
+
+      #login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      input {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+      }
+
+      button {
+        margin-top: 1.5rem;
+        padding: 1.2rem;
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin-top: 1.2rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      #container {
+        max-width: 70%;
+        height: auto;
+        min-height: 520px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 30px auto;
+        padding: 2.5rem;
+      }
+
+      #login-form {
+        gap: 1.8rem;
+      }
+
+      input, button {
+        padding: 1.3rem;
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin-top: 1.5rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      body {
+        padding: 1rem;
+      }
+
+      #container {
+        height: auto;
+        min-height: 380px;
+        margin-top: 10px;
+      }
+
+      h1 {
+        margin: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Cric-Verse Friend's</h1>
+  <div id="container">
+    <form id="login-form">
+      <fieldset>
+        <input type="text" id="username" name="username" placeholder=" " required>
+        <legend>Username</legend>
+      </fieldset>
+      <fieldset>
+        <input type="password" id="password" name="password" placeholder=" " required>
+        <legend>Password</legend>
+      </fieldset>
+      <button type="submit">Sign In</button>
+      <p>Don't have an account? <a href="./signup.html" target="_blank">Sign up</a></p>
+      <p>Forgot your password? <a href="#">Reset it</a></p>
+      <p>Need help? <a href="#">Contact support</a></p>
+    </form>
+  </div>
+  <div id="message"></div>
+</body>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const messageDiv = document.getElementById('message');
+
+    // Clear previous messages
+    messageDiv.innerHTML = '';
+    messageDiv.className = '';
+
+    // Validate input
+    if (!username || !password) {
+      messageDiv.innerHTML = 'Please enter both username and password!';
+      messageDiv.className = 'warning';
+      return;
+    }
+
+    // Check for admin login
+    if (username === 'admin' && password === 'admin') {
+      // Store admin info in localStorage as currentUser
+      const adminData = {
+        userName: 'admin',
+        password: 'admin'
+      };
+      localStorage.setItem('currentUser', JSON.stringify(adminData));
+      messageDiv.innerHTML = 'Admin login successful!';
+      messageDiv.className = 'success';
+      window.location.href = './platform.html';
+      return;
+    }
+
+    try {
+      // Get users array from localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const foundUser = users.find(u => u.userName === username && u.password === password);
+      if (foundUser) {
+        // Store logged in user info as currentUser
+        localStorage.setItem('currentUser', JSON.stringify(foundUser));
+        messageDiv.innerHTML = 'Login successful!';
+        messageDiv.className = 'success';
+        window.location.href = './platform.html';
+      } else {
+        messageDiv.innerHTML = 'Invalid username or password!';
+        messageDiv.className = 'error';
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      messageDiv.innerHTML = 'An error occurred during login. Please try again.';
+      messageDiv.className = 'error';
+    }
+  });
+</script>
+</html>
