@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cric-Verse Admin Profile</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: "7️⃣";
+      font-size: 2rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .username {
+      font-weight: 1000;
+      color: #4a5568;
+    }
+
+    .container {
+      max-width: 1900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 300px 1fr 250px;
+      gap: 2rem;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .profile-name {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #2d3748;
+    }
+
+    .profile-bio {
+      text-align: center;
+      color: #718096;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .profile-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 15px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #4a5568;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #718096;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-right: 320px;
+      width: calc(100% - 120px);
+      max-width: 1200px;
+    }
+
+    .create-post {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-post-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 15px;
+      resize: none;
+      font-family: inherit;
+      margin-bottom: 1rem;
+      }
+
+    .create-post-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .post {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .post-header {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .post-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .post-info h4 {
+      margin-bottom: 0.25rem;
+      color: #2d3748;
+    }
+
+    .post-time {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    .post-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .post-content {
+      padding: 2.5rem;
+    }
+
+    .post-actions {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 2rem;
+    }
+
+
+    .action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .action:hover {
+      color: #667eea;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 80px;
+      right: 40px;
+      width: 300px;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      padding: 20px 10px;
+      z-index: 100;
+      margin-top: 25px;
+    }
+
+    .suggestions {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .suggestions h3 {
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .follow-btn {
+      background: #667eea;
+      color: white;
+      border: navy;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .follow-btn:hover {
+      background: #764ba2;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .close {
+      float: right;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #718096;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      }
+    @media (max-width: 480px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 0.5rem;
+        margin: 1rem auto;
+      }
+
+      .profile-card {
+        position: static;
+        margin-bottom: 1rem;
+      }
+
+      .main-content {
+        margin-right: 0;
+        width: 100%;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        margin-top: 1rem;
+        right: auto;
+      }
+
+      .post-image {
+        height: 300px;
+      }
+
+      .navbar {
+        padding: 0.8rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+
+      .profile-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+        position: initial;
+        top: 100px;
+      }
+
+      .container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .main-content {
+        margin-right: 0;
+        width: 100%;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        margin-top: 1rem;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        grid-template-columns: 250px 1fr;
+      }
+
+      .main-content {
+        margin-right: 0;
+      }
+
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-content">
+        <div class="logo">Cric-Verse</div>
+        <div class="user-info">
+          <div class="user-avatar" id="navAvatar">RD</div>
+          <span class="username" id="navUsername">rajat_das_05</span>
+        </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="profile-card">
+      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-name" id="profileName">Rajat Das</div>
+      <div class="profile-bio" id="profileBio">Hey,Rajat Here.Just a guy who worships cricket🏏and lives by Dhoni's7️⃣ Calm mindset with Gratitude!</div>
+
+      <div class="profile-stats">
+        <div class="stat">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Posts</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">77.7K</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Following</div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="editProfile()">Edit Profile</button>
+        <button class="btn btn-secondary" onclick="sendMessage()">Message</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="create-post">
+        <textarea class="create-post-input" placeholder="What's on your mind? Share your nature adventures..."></textarea>
+        <button class="btn btn-primary" onclick="createPost()">Share Post</button>
+      </div>
+
+      <div id="postsContainer">
+        <!-- Posts will be dynamically added here -->
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="suggestions">
+        <h3>Suggested Friends</h3>
+        <div class="suggestion-item">
+          <div class="suggestion-avatar">😁</div>
+          <div style="flex: 1;">
+          <div style="font-weight: 600;">Sonu Kumar</div>
+          <div style="font-size: 0.8rem; color: #718096;"> Coder and Programming Enthusiast</div>
+        </div>
+        <button class="follow-btn" onclick="followUser(this)">Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-avatar">😎</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600;">Ashok Mukherjee</div>
+          <div style="font-size: 0.8rem; color: #718096;">Photographer and Senior Developer</div>
+        </div>
+        <button class="follow-btn" onclick="followUser(this)">Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-avatar">❤️</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600;">Tiyasa Mondal</div>
+          <div style="font-size: 0.8rem; color: #718096;">Ghibli collector and baby sitter</div>
+        </div>
+        <button class="follow-btn" onclick="followUser(this)">Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-avatar">🌺</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600;">Poushali Bolel</div>
+          <div style="font-size: 0.8rem; color: #718096;">Nature Lover and Cute Baby</div>
+        </div>
+        <button class="follow-btn" onclick="followUser(this)">Follow</button>
+      </div>
+      <div class="suggestion-item">
+        <div class="suggestion-avatar">😂</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600;">Sudip Mondal</div>
+          <div style="font-size: 0.8rem; color: #718096;">Backend Developer</div>
+        </div>
+        <button class="follow-btn" onclick="followUser(this)">Follow</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Edit Profile</h2>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editName">Name</label>
+          <input type="text" id="editName" value="Rajat Das">
+        </div>
+        <div class="form-group">
+          <label for="editBio">Bio</label>
+          <textarea id="editBio" rows="4">Hey,Rajat Here.Just a guy who worships cricket🏏and lives by Dhoni's7️⃣ Calm mindset with Gratitude!</textarea>
+        </div>
+        <div class="form-group">
+          <label for="editAvatar">Avatar Emoji</label>
+          <input type="text" id="editAvatar" value="👤" maxlength="2">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</body>
+<script>
+  // Sample posts data
+  const posts = [
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "2 hours ago",
+      content: "From 2004 to 2025.It has been 25 years he has dominated the every Cricket league like nothing❤️👌😍",
+      image: "msdhoni/IMG-20250608-WA0010.jpg",
+      likes: "7M",
+      comments: "777K",
+      shares: "77K"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "7 hours ago",
+      content: "In 2007,when the whole world is against of Team India.My man prove the whole world wrong by winning T20 World Cup with a young team and make the whole world realise who is the best🔥🔥🔥 ",
+      image: "msdhoni/IMG-20250608-WA0007.jpg",
+      likes: "13.2M",
+      comments: "7.8M",
+      shares: "77M"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "1 day ago",
+      content: "In 2018,he was completely in beast form who just thrashes every bowler like nothing🔥🔥🔥.",
+      image: "msdhoni/IMG-20250608-WA0018.jpg",
+      likes: "25M",
+      comments: "10M",
+      shares: "900K"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "2 day ago",
+      content: "7️⃣&8️⃣.",
+      image: "msdhoni/IMG-20250608-WA0016.jpg",
+      likes: "18M",
+      comments: "8M",
+      shares: "798K"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "3 day ago",
+      content: "GOAT😍🏏🔥.",
+      image: "msdhoni/IMG-20250608-WA0012.jpg",
+      likes: "10M",
+      comments: "5M",
+      shares: "528K"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "5 day ago",
+      content: "The 1% Aggression is enough to make the opponent feel terrible😈🥶😎.",
+      image: "msdhoni/IMG-20250608-WA0006.jpg",
+      likes: "20M",
+      comments: "1.8M",
+      shares: "563K"
+    },
+    {
+      user: "Rajat Das",
+      avatar: "👤",
+      time: "7 day ago",
+      content: "The Eyes tell everything what he had achieved throughout his cricketing careers7️⃣🏏🔥.",
+      image: "msdhoni/IMG-20250608-WA0015.jpg",
+      likes: "5.7M",
+      comments: "1.2M",
+      shares: "321K"
+    }
+  ];
+
+  // Initialize the page
+  function initializePage() {
+    renderPosts();
+  }
+
+  // Render posts
+  function renderPosts() {
+    const container = document.getElementById('postsContainer');
+    container.innerHTML = '';
+
+    posts.forEach(post => {
+      const postElement = document.createElement('div');
+      postElement.className = 'post';
+      postElement.innerHTML = `
+        <div class="post-header">
+          <div class="post-avatar">${post.avatar}</div>
+          <div class="post-info">
+            <h4>${post.user}</h4>
+            <div class="post-time">${post.time}</div>
+          </div>
+        </div>
+        <img src="${post.image}" alt="Post image" class="post-image" onerror="this.style.display='none'">
+        <div class="post-content">
+          <p>${post.content}</p>
+        </div>
+        <div class="post-actions">
+          <div class="action" onclick="likePost(this)">
+            <span>❤️</span>
+            <span>${post.likes}</span>
+          </div>
+          <div class="action" onclick="commentPost()">
+            <span>💬</span>
+            <span>${post.comments}</span>
+          </div>
+          <div class="action" onclick="sharePost()">
+            <span>📤</span>
+            <span>${post.shares}</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(postElement);
+    });
+  }
+
+  // Edit profile function
+  function editProfile() {
+    document.getElementById('editModal').style.display = 'block';
+  }
+
+  // Close modal
+  function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+
+  // Save profile changes
+  function saveProfile() {
+    const name = document.getElementById('editName').value;
+    const bio = document.getElementById('editBio').value;
+    const avatar = document.getElementById('editAvatar').value;
+
+    // Update profile elements
+    document.getElementById('profileName').textContent = name;
+    document.getElementById('profileBio').textContent = bio;
+    document.getElementById('profileAvatar').textContent = avatar;
+    document.getElementById('navUsername').textContent = name;
+    document.getElementById('navAvatar').textContent = avatar.charAt(0).toUpperCase();
+
+    closeModal();
+
+    // Show success message
+    alert('Profile updated successfully! 🎉');
+  }
+
+  // Send message function
+  function sendMessage() {
+    alert('Message feature coming soon! 💬 Connect with friends through direct messages.');
+  }
+
+  // Create post function
+  function createPost() {
+    const input = document.querySelector('.create-post-input');
+    const content = input.value.trim();
+
+    if (content) {
+      const newPost = {
+        user: document.getElementById('profileName').textContent,
+        avatar: document.getElementById('profileAvatar').textContent,
+        time: "Just now",
+        content: content,
+        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center",
+        likes: 0,
+        comments: 0,
+        shares: 0
+      };
+
+      posts.unshift(newPost);
+      renderPosts();
+      input.value = '';
+
+      // Show success message
+      alert('Post shared successfully! 🌟');
+    }
+  }
+
+  // Follow user function
+  function followUser(button) {
+    if (button.textContent === 'Follow') {
+      button.textContent = 'Following';
+      button.style.background = '#48bb78';
+    } else {
+      button.textContent = 'Follow';
+      button.style.background = '#667eea';
+    }
+  }
+
+  // Like post function
+  function likePost(element) {
+    const likeCount = element.querySelector('span:last-child');
+    let count = parseInt(likeCount.textContent);
+    likeCount.textContent = count + 1;
+    element.style.color = '#e53e3e';
+
+    setTimeout(() => {
+      element.style.color = '';
+    }, 300);
+  }
+
+  // Comment function
+  function commentPost() {
+    alert('Comments feature coming soon! 💭 Share your thoughts on posts.');
+  }
+
+  // Share function
+  function sharePost() {
+    alert('Post shared! 📤 Your friends will love this content.');
+  }
+
+  // Close modal when clicking outside
+  window.onclick = function(event) {
+    const modal = document.getElementById('editModal');
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  // Initialize the page when loaded
+  document.addEventListener('DOMContentLoaded', initializePage);
+</script>
+</html>
